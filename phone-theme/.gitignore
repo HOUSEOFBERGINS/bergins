@@ -5,3 +5,5 @@ dist/*.zip
 brand/fonts/
 dist/page/
 android-app/build/
+# licensed fonts (converted from brand/fonts at build time)
+android-app/assets/*.ttf

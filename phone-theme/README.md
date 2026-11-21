@@ -23,3 +23,17 @@ Rendering uses Playwright's Chromium. Wallpapers are drawn on a 720×1600 canvas
 Brand tokens: green `#557352` (sampled from the logo), ink `#231F20`, ivory `#F5F1E8`,
 muted `#7A756F`, line `#DDD8CC`. Fonts: NEXT ART (headlines/labels), Typewriter Condensed
 (sub-lines), Mantreya (one short script line).
+
+## Android app (one-tap Install)
+
+`android-app/` is the Bergins Theme app (Apktool project, hand-written smali). Before building, convert the
+brand fonts into `android-app/assets/` (they are licensed files and are not committed):
+
+```bash
+python3 -c "from fontTools.ttLib import TTFont as F
+for s,d in [('brand/fonts/next-art-semibold.woff2','nextart.ttf'),('brand/fonts/typewcond-regular.woff2','typewriter.ttf')]:
+    f=F(s); f.flavor=None; f.save('android-app/assets/'+d)"
+python3 scripts/appfilter.py
+java -jar apktool.jar b android-app -o bergins-theme-unsigned.apk
+java -jar uber-apk-signer.jar -a bergins-theme-unsigned.apk -o signed
+```
