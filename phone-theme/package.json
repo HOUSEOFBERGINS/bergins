@@ -1,0 +1,15 @@
+{
+  "name": "bergins-phone-theme",
+  "version": "1.0.0",
+  "description": "House of Bergins Android phone theme generator",
+  "scripts": {
+    "build": "python3 scripts/vectorize.py && python3 scripts/paper_tile.py && node scripts/render.cjs && node scripts/preview.cjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lucide-static": "^1.77.0",
+    "simple-icons": "^16.38.0"
+  },
+  "private": true
+}

@@ -1,0 +1,5 @@
+node_modules/
+dist/.build/
+dist/*.zip
+# licensed font files: fetch with scripts/fetch-brand.sh
+brand/fonts/
