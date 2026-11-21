@@ -1,0 +1,211 @@
+<title>Bergins Android Theme</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one phone-width column on paper; each section = instruction, then a grid of things to save. */
+@font-face{font-family:"NEXT ART";src:url(data:font/woff2;base64,{{FONT_NA_REG}}) format("woff2");font-weight:400}
+@font-face{font-family:"NEXT ART";src:url(data:font/woff2;base64,{{FONT_NA_SEMI}}) format("woff2");font-weight:600}
+@font-face{font-family:"Typewriter Condensed";src:url(data:font/woff2;base64,{{FONT_TW}}) format("woff2")}
+:root{
+  --bg:#FFFFFF; --ink:#231F20; --green:#557352; --green-deep:#46613F; --ivory:#F5F1E8;
+  --muted:#6E6963; --line:#DDD8CC; --card:#FFFFFF;
+  --display:"NEXT ART","Cormorant Garamond",Georgia,serif;
+  --body:"Typewriter Condensed","Courier New",ui-monospace,monospace;
+  color-scheme:light;
+}
+[hidden]{display:none!important}
+body{background:var(--bg) url(paper-tile.jpg);background-size:900px 300px;color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.45}
+.wrap{max-width:600px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px;display:flex;flex-direction:column;gap:44px}
+header{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+.lockup{width:min(230px,62%);color:var(--green)}
+.lockup svg,.mark svg{display:block;width:100%;height:auto}
+.kicker{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:var(--green)}
+h2{font-family:var(--display);font-weight:600;font-size:20px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);text-wrap:balance;display:flex;align-items:baseline;gap:12px}
+h2 .n{font-size:13px;color:var(--green);letter-spacing:.2em}
+.lede{color:var(--muted);max-width:34ch;margin-inline:auto}
+.hero{width:100%;max-width:100%;border-radius:14px;box-shadow:0 18px 50px rgba(35,31,32,.14);display:block}
+section{display:flex;flex-direction:column;gap:16px}
+.how{background:var(--ivory);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.how p{margin:0}
+.how b{font-weight:400;color:var(--green-deep);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.big{appearance:none;border:0;border-radius:999px;background:var(--green);color:var(--ivory);font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.22em;text-transform:uppercase;padding:16px 22px;min-height:52px;cursor:pointer;width:100%}
+.big:active{background:var(--green-deep)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:420px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.item{display:flex;flex-direction:column;gap:8px;min-width:0}
+.item img{width:100%;max-width:100%;border-radius:12px;display:block;box-shadow:0 6px 18px rgba(35,31,32,.12);background:var(--ivory)}
+.label{font-size:14px;line-height:1.25;color:var(--muted);min-height:2.5em}
+.save{appearance:none;border:1px solid var(--green);background:var(--card);color:var(--green);border-radius:999px;font-family:var(--display);font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:11px 8px;min-height:44px;cursor:pointer}
+.save:active{background:var(--ivory)}
+.save[data-state="busy"]{opacity:.6}
+.save[data-state="done"]{background:var(--green);color:var(--ivory)}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.tabs{display:flex;gap:8px}
+.tab{flex:1;appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:12px;font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;min-height:46px}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--ivory);border-color:var(--ink)}
+.icons{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px 10px}
+@media (min-width:520px){.icons{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.ic{appearance:none;border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;color:var(--muted);font-family:var(--body);font-size:13px;min-width:0}
+.ic img{width:100%;max-width:72px;aspect-ratio:1;border-radius:50%;display:block}
+.ic span{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ic[data-state="done"] span{color:var(--green)}
+.wide{grid-column:span 2}
+.walls{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px 10px}
+.walls .label{font-size:13px}
+.walls .save{font-size:10px;letter-spacing:.16em;padding-inline:4px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--ivory);border-radius:999px;padding:12px 20px;font-size:15px;max-width:calc(100% - 32px);text-align:center;z-index:20}
+.lightbox{position:fixed;inset:0;background:rgba(35,31,32,.92);z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lightbox img{max-width:100%;max-height:72vh;border-radius:12px;background:var(--ivory)}
+.lightbox p{color:var(--ivory);text-align:center;margin:0;max-width:32ch}
+.lightbox .save{background:transparent;color:var(--ivory);border-color:var(--ivory);padding-inline:28px}
+footer{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;color:var(--muted);font-size:14px}
+.mark{width:min(300px,80%);color:var(--green)}
+@media (prefers-reduced-motion:no-preference){.save,.big,.tab{transition:background .15s,color .15s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="lockup" aria-label="Bergins, crafting harmony">{{SVG_LOCKUP}}</div>
+    <div class="kicker">Android theme</div>
+    <p class="lede">Wallpapers, icons and widgets for your phone. Tap <b>Save</b> on anything you want.</p>
+    <img class="hero" src="preview.jpg" alt="The theme on three Android screens: green lock screen, paper home screen with green icons, green home screen with ivory icons" width="1280" height="1000">
+  </header>
+
+  <section aria-labelledby="s1">
+    <h2 id="s1"><span class="n">1</span>Wallpapers</h2>
+    <div class="how">
+      <p>Tap <b>Save</b> under a wallpaper.</p>
+      <p>Open it in your <b>Gallery</b>, tap <b>⋮</b>, then <b>Set as wallpaper</b>. Pick lock screen or home screen.</p>
+      <p>"Lock" designs keep the logo low so the clock fits on top. "Home" designs keep it high so your apps fit below.</p>
+    </div>
+    <button class="big" type="button" data-file="Bergins-wallpapers.zip" data-zip="wallpapers">Save all 9 wallpapers</button>
+    <div class="grid walls">{{WALLPAPERS}}</div>
+  </section>
+
+  <section aria-labelledby="s2">
+    <h2 id="s2"><span class="n">2</span>App icons</h2>
+    <div class="how">
+      <p>Pick green or ivory, then tap <b>Save all icons</b>. Open the file in <b>My Files</b> (Samsung) or <b>Files</b> (Google) and tap <b>Extract</b>.</p>
+      <p><b>Samsung:</b> get <b>Good Lock</b> from the Galaxy Store, open <b>Theme Park</b>, then <b>Icon</b>, then <b>Create new</b>, and swap in the Bergins icons.</p>
+      <p><b>Any other phone:</b> get <b>Nova Launcher</b> from the Play Store. Press and hold an app, tap <b>Edit</b>, tap the icon, then choose the matching picture.</p>
+      <p>Tap a single icon below to save just that one.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Icon colour">
+      <button class="tab" type="button" role="tab" id="tab-green" aria-selected="true" aria-controls="set-green">Green</button>
+      <button class="tab" type="button" role="tab" id="tab-ivory" aria-selected="false" aria-controls="set-ivory">Ivory</button>
+    </div>
+    <div id="set-green" role="tabpanel" aria-labelledby="tab-green" style="display:flex;flex-direction:column;gap:16px">
+      <button class="big" type="button" data-file="Bergins-icons-green.zip" data-zip="green">Save all 43 green icons</button>
+      <div class="icons">{{ICONS_GREEN}}</div>
+    </div>
+    <div id="set-ivory" role="tabpanel" aria-labelledby="tab-ivory" style="display:flex;flex-direction:column;gap:16px" hidden>
+      <button class="big" type="button" data-file="Bergins-icons-ivory.zip" data-zip="ivory">Save all 43 ivory icons</button>
+      <div class="icons">{{ICONS_IVORY}}</div>
+    </div>
+  </section>
+
+  <section aria-labelledby="s3">
+    <h2 id="s3"><span class="n">3</span>Widgets</h2>
+    <div class="how">
+      <p>Save a widget picture, install any <b>photo widget</b> app from the Play Store, add its widget to your home screen and choose the picture. Use the wide ones at 4×2 and the square ones at 2×2.</p>
+    </div>
+    <div class="grid">{{WIDGETS}}</div>
+  </section>
+
+  <footer>
+    <div class="mark" aria-label="The elsewhere collection">{{SVG_ELSEWHERE}}</div>
+    <p>Made from the official House of Bergins logo, fonts and photography.</p>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="lightbox" id="lightbox" hidden>
+  <img id="lb-img" alt="">
+  <p>Press and hold the picture, then tap <b style="color:inherit">Download image</b>.</p>
+  <button class="save" type="button" id="lb-close">Close</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+var ZIPS = {{ZIPS}};
+(function () {
+  var downloadsP = (async function () {
+    try { return window.claude && window.claude.use ? await window.claude.use("downloads") : null; }
+    catch (e) { return null; }
+  })();
+
+  var toastEl = document.getElementById("toast"), toastTimer;
+  function toast(msg) {
+    toastEl.textContent = msg; toastEl.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { toastEl.hidden = true; }, 3200);
+  }
+
+  var lb = document.getElementById("lightbox"), lbImg = document.getElementById("lb-img");
+  function openFull(src) {
+    if (!src) { toast("Saving isn't available in this view. Open this page in the Claude app or a browser."); return; }
+    lbImg.src = src; lb.hidden = false;
+  }
+  document.getElementById("lb-close").addEventListener("click", function () { lb.hidden = true; lbImg.removeAttribute("src"); });
+
+  function label(btn, text) {
+    var span = btn.classList.contains("ic") ? btn.querySelector("span") : btn;
+    if (!btn.dataset.orig) btn.dataset.orig = span.textContent;
+    span.textContent = text;
+  }
+
+  async function save(btn) {
+    if (btn.dataset.state === "busy") return;
+    var file = btn.dataset.file, src = btn.dataset.src;
+    var dl = await downloadsP;
+    if (!dl) { openFull(src); return; }
+    btn.dataset.state = "busy";
+    var wasIcon = btn.classList.contains("ic");
+    if (!wasIcon) label(btn, "Preparing…");
+    try {
+      var blob;
+      if (btn.dataset.zip) {
+        if (!window.JSZip) throw { code: "fetch" };
+        var list = ZIPS[btn.dataset.zip], zip = new JSZip(), done = 0;
+        await Promise.all(list.map(async function (pair) {
+          var r = await fetch(pair[0]);
+          if (!r.ok) throw { code: "fetch" };
+          zip.file(pair[1], await r.blob());
+          done++; label(btn, "Preparing " + done + " of " + list.length + "…");
+        }));
+        blob = await zip.generateAsync({ type: "blob", compression: "STORE" });
+      } else {
+        var res = await fetch(src);
+        if (!res.ok) throw { code: "fetch" };
+        blob = await res.blob();
+      }
+      await dl.save({ filename: file, data: blob });
+      btn.dataset.state = "done";
+      label(btn, wasIcon ? "Saved" : "Saved");
+      toast(/\.zip$/.test(file) ? "Saved. Open it in My Files or Files and tap Extract." : "Saved to your phone.");
+    } catch (e) {
+      btn.dataset.state = "";
+      label(btn, btn.dataset.orig);
+      var code = e && e.code;
+      if (code === "declined") return;
+      if (code === "rate_limited") { toast("One moment, then tap Save again."); return; }
+      if (code === "fetch") { toast("That file didn't load. Check your connection and tap Save again."); return; }
+      openFull(src);
+    }
+  }
+
+  document.addEventListener("click", function (ev) {
+    var btn = ev.target.closest("[data-file]");
+    if (btn) save(btn);
+  });
+
+  var tabs = document.querySelectorAll(".tab");
+  tabs.forEach(function (t) {
+    t.addEventListener("click", function () {
+      tabs.forEach(function (o) {
+        var on = o === t;
+        o.setAttribute("aria-selected", on ? "true" : "false");
+        document.getElementById(o.getAttribute("aria-controls")).hidden = !on;
+      });
+    });
+  });
+})();
+</script>
