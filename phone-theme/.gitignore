@@ -4,3 +4,4 @@ dist/*.zip
 # licensed font files: fetch with scripts/fetch-brand.sh
 brand/fonts/
 dist/page/
+android-app/build/
